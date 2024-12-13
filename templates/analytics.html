@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Chatbot Analytics Dashboard</h1>
+        <p>Total Queries: {{ total_queries }}</p>
+        <p>Average User Satisfaction Rating: {{ average_satisfaction }}</p>
+
+        {% if most_common_topic %}
+            <h3>Most Common Topic:</h3>
+            <p>{{ most_common_topic[0][0] }} ({{ most_common_topic[0][1] }} times)</p>
+        {% else %}
+            <p>No topics recorded yet.</p>
+        {% endif %}
+
+        <h3>Chat History:</h3>
+        <ul class="list-group">
+            {% for chat in chat_history %}
+                <li class="list-group-item">Query: "{{ chat.query }}", Satisfaction Rating: {{ chat.satisfaction }}</li>
+            {% endfor %}
+            {% if not chat_history %}
+                <li class="list-group-item">No chat history available.</li>
+            {% endif %}
+        </ul>
+
+        <a href="/" class="btn btn-secondary mt-3">Back to Chatbot</a>
+    </div>
+</body>
+</html>

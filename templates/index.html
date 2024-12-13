@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Chatbot Interface</h1>
+        <form id="queryForm" class="mt-4">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Ask me anything..." required>
+            </div>
+            <div class="form-group">
+                <select name="satisfaction" class="form-control" required>
+                    <option value="" disabled selected>Satisfaction Rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <!-- Dashboard Button -->
+        <div class="text-center mt-4">
+            <a href="/analytics" class="btn btn-secondary">Go to Dashboard</a>
+        </div>
+
+        <script>
+            document.getElementById('queryForm').onsubmit = async function(event) {
+                event.preventDefault();
+                const formData = new FormData(this);
+                const response = await fetch('/query', {
+                    method: 'POST',
+                    body: formData
+                });
+                const result = await response.text();
+                alert(result); // Display the response from the chatbot
+            };
+        </script>
+    </div>
+</body>
+</html>
